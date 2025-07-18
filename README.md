@@ -74,8 +74,8 @@ Follow these steps to get the project up and running on your local machine.
       https://drive.google.com/drive/folders/1UX8jXUXyEjhLLZ38tcgOwGsZ6XFSLDJ-?usp=sharing
 
     * **Important:** Model filenames must follow the convention:
-        `model_ACCURACY_acc_SEQUENCE_LENGTH_frames_final_data.pt`
-        (e.g., `model_87_acc_60_frames_final_data.pt`, `model_92_acc_100_frames_final_data.pt`). The accuracy can be an integer or float. Ensure you have models for the sequence lengths you intend to support (e.g., 10, 20, 40, 60, 100 frames).
+        `model_ACCURACY_acc_SEQUENCE_LENGTH_frames_FF_data.pt`
+        (e.g., `model_87_acc_60_frames_FF_data.pt`, `model_92_acc_100_frames_FF_data.pt`). The accuracy can be an integer or float. Ensure you have models for the sequence lengths you intend to support (e.g., 10, 20, 40, 60, 100 frames).
 
 5.  **Run Database Migrations:**
     ```bash
