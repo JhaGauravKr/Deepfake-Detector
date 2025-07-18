@@ -48,7 +48,7 @@ Follow these steps to get the project up and running on your local machine.
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/YourGitHubUsername/Deepfake-Detector-Django.git](https://github.com/JhaGauravKr/DeepFake-Detector.git)
+    git clone [https://github.com/JhaGauravKr/DeepFake-Detector.git](https://github.com/JhaGauravKr/DeepFake-Detector.git)
     cd Deepfake-Detector-Django # Navigate to the project root where manage.py is
     ```
 
