@@ -102,11 +102,15 @@ Follow these steps to get the project up and running on your local machine.
 
 | Model Name | No of videos | No of Frames | Accuracy |
 |------------|--------------|--------------|----------|
-|model_84_acc_10_frames_final_data.pt |6000 |10 |84.21461|
-|model_87_acc_20_frames_final_data.pt | 6000 |20 |87.79160|
-|model_89_acc_40_frames_final_data.pt | 6000| 40 |89.34681|
-|model_90_acc_60_frames_final_data.pt | 6000| 60 |90.59097 |
-|model_91_acc_80_frames_final_data.pt | 6000 | 80 | 91.49818 |
-|model_93_acc_100_frames_final_data.pt| 6000 | 100 | 93.58794|
+|model_84_acc_10_frames_FF_data.pt |6000 |10 |84.21461|
+|model_87_acc_20_frames_FF_data.pt | 6000 |20 |87.79160|
+|model_89_acc_40_frames_FF_data.pt | 6000| 40 |89.34681|
+|model_90_acc_60_frames_FF_data.pt | 6000| 60 |90.59097 |
+|model_91_acc_80_frames_FF_data.pt | 6000 | 80 | 91.49818 |
+|model_93_acc_100_frames_FF_data.pt| 6000 | 100 | 93.58794|
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](https://opensource.org/licenses/MIT). You can create a `LICENSE` file in your root with the content.
 
 
