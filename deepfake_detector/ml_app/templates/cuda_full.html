@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Processing Error{% endblock %}
+
+{% block content %}
+    <div class="alert-message error" style="max-width: 700px; margin: 50px auto;"> {# New alert class #}
+        <h1 style="color: inherit;">Processing Error</h1> {# Inherit color for consistency #}
+        <p>An unexpected error occurred during the video analysis. This might be due to several reasons:</p>
+        <ul style="text-align: left; list-style-type: disc; padding-left: 25px;">
+            <li><strong>System Resources:</strong> Insufficient GPU memory (if CUDA is enabled) or other system resource limitations.</li>
+            <li><strong>Video Issues:</strong> The video file might be corrupted, or its format could be causing issues with processing libraries.</li>
+            <li><strong>Model Loading:</strong> There might have been an issue loading the deep learning model.</li>
+            <li><strong>Unexpected Data:</strong> The video content might contain patterns the model or face detection algorithm can't handle.</li>
+        </ul>
+        {% if error_detail %}
+            <p><strong>Technical Details:</strong> <code>{{ error_detail }}</code></p>
+        {% endif %}
+        <p>Please try again with a different video file or a different sequence length. If the issue persists, contact the administrator.</p>
+        <a href="{% url 'ml_app:home' %}" class="btn btn-secondary"><i class="fas fa-undo"></i> Go to Home</a> {# New btn class #}
+    </div>
+{% endblock %}

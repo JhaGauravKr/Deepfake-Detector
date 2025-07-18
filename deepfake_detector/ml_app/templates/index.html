@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Video{% endblock %}
+
+{% block content %}
+    <h1 id="upload-section">Upload Video for Deepfake Detection</h1>
+    <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Select a video file and specify the sequence length for analysis. Our model will process the frames to determine if deepfake content is present.</p>
+
+    <form method="post" enctype="multipart/form-data" id="upload-form"> {# Added ID to the form #}
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.upload_video_file.label_tag }}
+            {{ form.upload_video_file }}
+            {% if form.upload_video_file.help_text %}
+                <span class="helptext">{{ form.upload_video_file.help_text }}</span>
+            {% endif %}
+            {% if form.upload_video_file.errors %}
+                <ul class="errorlist">
+                    {% for error in form.upload_video_file.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.sequence_length.label_tag }}
+            {{ form.sequence_length }}
+            {% if form.sequence_length.help_text %}
+                <span class="helptext">{{ form.sequence_length.help_text }}</span>
+            {% endif %}
+            {% if form.sequence_length.errors %}
+                <ul class="errorlist">
+                    {% for error in form.sequence_length.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        {% if form.non_field_errors %}
+            <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <button type="submit" class="btn" id="analyze-button"> {# Added ID to the button #}
+            <i class="fas fa-spinner fa-spin" style="display: none; margin-right: 8px;"></i> {# Spinner icon, hidden by default #}
+            <span id="button-text"><i class="fas fa-search"></i> Analyze Video</span> {# Text span #}
+        </button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadForm = document.getElementById('upload-form');
+            const analyzeButton = document.getElementById('analyze-button');
+            const buttonText = document.getElementById('button-text');
+            const spinnerIcon = analyzeButton.querySelector('.fa-spinner');
+
+            if (uploadForm && analyzeButton) {
+                uploadForm.addEventListener('submit', () => {
+                    // Show spinner and change text
+                    spinnerIcon.style.display = 'inline-block';
+                    buttonText.innerHTML = 'Analyzing Video...';
+                    
+                    // Disable the button to prevent multiple submissions
+                    analyzeButton.disabled = true;
+                    analyzeButton.style.cursor = 'not-allowed';
+                    analyzeButton.style.opacity = '0.7'; // Subtle visual feedback for disabled state
+                });
+
+                // Optional: Re-enable button if page is navigated back via browser history (though Django redirect clears state)
+                window.addEventListener('pageshow', (event) => {
+                    if (event.persisted) { // Check if page was loaded from cache
+                        spinnerIcon.style.display = 'none';
+                        buttonText.innerHTML = '<i class="fas fa-search"></i> Analyze Video';
+                        analyzeButton.disabled = false;
+                        analyzeButton.style.cursor = 'pointer';
+                        analyzeButton.style.opacity = '1';
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Prediction Results{% endblock %}
+
+{% block content %}
+    <h1>Prediction Results</h1>
+
+    {% if no_faces %}
+        <div class="alert-message error"> {# New alert class #}
+            <p><strong>No faces were detected in the video to perform the analysis.</strong> Please try another video that clearly shows faces.</p>
+        </div>
+        {% if original_video %}
+            <div class="video-display-card"> {# New video display class #}
+                <h3>Original Video:</h3>
+                <video controls>
+                    <source src="{{ original_video }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        {% endif %}
+        <div style="text-align: center;">
+            <a href="{% url 'ml_app:home' %}" class="btn btn-secondary"><i class="fas fa-undo"></i> Upload Another Video</a> {# New btn class #}
+        </div>
+
+    {% elif model_not_found %}
+        <div class="alert-message error"> {# New alert class #}
+            <p><strong>No appropriate model found for the selected sequence length ({{ sequence_length }}).</strong></p>
+            <p>This usually means a trained model file (e.g., `model_XX_acc_{{ sequence_length }}_seq.pt`) is missing from the server's `models/` directory.</p>
+            {% if model_search_path %}
+                <p>Models were expected to be in: <code>{{ model_search_path }}</code></p>
+            {% endif %}
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'ml_app:home' %}" class="btn btn-secondary"><i class="fas fa-undo"></i> Go Back to Upload</a> {# New btn class #}
+        </div>
+
+    {% elif error_message %}
+        <div class="alert-message error"> {# New alert class #}
+            <p><strong>An error occurred during video processing:</strong> {{ error_message }}</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'ml_app:home' %}" class="btn btn-secondary"><i class="fas fa-undo"></i> Go Back to Upload</a> {# New btn class #}
+        </div>
+
+    {% else %}
+        {% if original_video %}
+            <div class="video-display-card"> {# New video display class #}
+                <h3>Original Video:</h3>
+                <video controls>
+                    <source src="{{ original_video }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        {% endif %}
+
+        <div class="result-card"> {# New result class #}
+            <h2>Analysis Result:</h2>
+            <p>
+                Prediction: <span class="prediction-text {% if output == 'FAKE' %}fake{% else %}real{% endif %}">{{ output }}</span>
+            </p>
+            <p class="confidence-text">
+                Confidence: {{ confidence }}%
+            </p>
+        </div>
+
+        {% if preprocessed_images %}
+            <section class="grid-section">
+                <h2>Preprocessed Frames:</h2>
+                <p style="text-align: center;">These are individual frames extracted from the video and prepared for analysis.</p>
+                <div class="image-gallery"> {# New image gallery class #}
+                    {% for image_url in preprocessed_images %}
+                        <div class="image-gallery-item"> {# New image gallery item class #}
+                            <img src="{{ image_url }}" alt="Preprocessed Frame {{ forloop.counter }}">
+                            <div class="image-gallery-item-label">Frame {{ forloop.counter }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        {% if faces_cropped_images %}
+            <section class="grid-section">
+                <h2>Detected and Cropped Faces:</h2>
+                <p style="text-align: center;">Faces detected and cropped from the frames before feeding into the model. This is what the model primarily analyzes.</p>
+                <div class="image-gallery"> {# New image gallery class #}
+                    {% for image_url in faces_cropped_images %}
+                        <div class="image-gallery-item"> {# New image gallery item class #}
+                            <img src="{{ image_url }}" alt="Cropped Face from Frame {{ forloop.counter }}">
+                            <div class="image-gallery-item-label">Face from Frame {{ forloop.counter }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        {% comment %} Uncomment this section if you enable heatmap generation in views.py {% endcomment %}
+        {% comment %}
+        {% if heatmap_images %}
+            <section class="grid-section">
+                <h2>Heatmap Visualizations:</h2>
+                <p style="text-align: center;">Areas the model focused on (hotter colors indicate higher importance) when making its prediction for each frame.</p>
+                <div class="image-gallery">
+                    {% for image_url in heatmap_images %}
+                        <div class="image-gallery-item">
+                            <img src="{{ image_url }}" alt="Heatmap Frame {{ forloop.counter }}">
+                            <div class="image-gallery-item-label">Heatmap Frame {{ forloop.counter }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+        {% endcomment %}
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="{% url 'ml_app:home' %}" class="btn"><i class="fas fa-redo"></i> Analyze Another Video</a> {# New btn class #}
+        </div>
+    {% endif %}
+{% endblock %}

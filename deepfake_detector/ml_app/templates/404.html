@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block content %}
+    <div class="alert-message error" style="max-width: 600px; margin: 50px auto;"> {# New alert class #}
+        <h1 style="color: inherit;">404 - Page Not Found</h1> {# Inherit color for consistency #}
+        <p>Oops! It looks like the page you are looking for doesn't exist.</p>
+        <p>Please double-check the URL or navigate back to the home page.</p>
+        <a href="{% url 'ml_app:home' %}" class="btn btn-secondary"><i class="fas fa-home"></i> Go to Home</a> {# New btn class #}
+    </div>
+{% endblock %}

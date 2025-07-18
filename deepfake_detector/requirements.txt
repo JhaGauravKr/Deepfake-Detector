@@ -1,0 +1,9 @@
+Django==5.0.4  # Or the specific version you installed, e.g., Django==5.2.4 as per your traceback
+opencv-python
+numpy
+torch
+torchvision
+scikit-image
+face-recognition
+Pillow
+matplotlib

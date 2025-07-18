@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+    <h1>About the Deepfake Detection App</h1>
+    <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">This application is designed to help identify deepfake videos using advanced deep learning techniques. It processes uploaded video files to analyze their authenticity, providing a prediction of whether the content is "REAL" or "FAKE" along with a confidence score.</p>
+
+    <section class="grid-section" style="border-top: none; padding-top: 0;">
+        <h2>How It Works:</h2>
+        <ol style="max-width: 800px; margin: 0 auto; padding-left: 0; list-style-position: inside;">
+            <li><strong>Video Upload:</strong> Users can easily upload video files through a straightforward web interface. The system ensures that only valid video formats and sizes are accepted.</li>
+            <li><strong>Frame Extraction & Preprocessing:</strong> Once uploaded, the video is systematically broken down into individual frames. These frames undergo essential preprocessing steps, including resizing to a consistent dimension (112x112 pixels) and normalization, preparing them for neural network input.</li>
+            <li><strong>Face Detection & Cropping:</strong> A crucial step involves the use of the `face_recognition` library to accurately locate and extract facial regions from each processed frame. This allows the deep learning model to focus its analysis specifically on the most relevant parts of the video content.</li>
+            <li><strong>Feature Extraction (ResNeXt50):</strong> The cropped face images are then fed into a powerful, pre-trained ResNeXt50 Convolutional Neural Network (CNN). This CNN acts as a feature extractor, generating rich, high-level visual representations that capture subtle patterns in the facial data.</li>
+            <li><strong>Temporal Analysis (LSTM):</strong> Recognizing that deepfakes often involve temporal inconsistencies, the extracted features from a sequence of frames are passed to a Long Short-Term Memory (LSTM) network. The LSTM is adept at learning long-term dependencies and patterns across time, which is vital for detecting anomalies that might not be visible in single frames.</li>
+            <li><strong>Prediction & Confidence:</strong> The combined insights from the CNN (spatial features) and the LSTM (temporal patterns) are fed into a final classification layer. This layer outputs a prediction indicating whether the video is "REAL" or "FAKE," accompanied by a confidence score, reflecting the model's certainty.</li>
+            <li><strong>(Optional) Heatmap Visualization:</strong> The system also has the capability (currently commented out but implementable) to generate heatmaps. These visual overlays highlight the specific areas within the detected faces that the model paid the most attention to, offering insights into its decision-making process.</li>
+        </ol>
+    </section>
+
+    <p style="margin-top: 40px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">This project stands as a practical demonstration of integrating cutting-edge deep learning models with a robust web framework to address real-world challenges in multimedia forensics.</p>
+{% endblock %}
