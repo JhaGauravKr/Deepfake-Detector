@@ -46,11 +46,14 @@ Follow these steps to get the project up and running on your local machine.
 
 ### Steps
 
-1.  **Clone the Repository:**
+1. **Clone the Repository:**
+    Open your terminal or command prompt and navigate to the directory where you want to save the project. Then, run the following command:
+
     ```bash
-    git clone https://github.com/JhaGauravKr/DeepFake-Detector.git
-    cd Deepfake-Detector-Django # Navigate to the project root where manage.py is
+    git clone [https://github.com/JhaGauravKr/Deepfake-Detector.git](https://github.com/JhaGauravKr/Deepfake-Detector.git)
+    cd Deepfake-Detector # Navigate into the cloned project directory
     ```
+    *This command will create a folder named `Deepfake-Detector` in your current directory and download all project files into it.*
 
 2.  **Create and Activate a Virtual Environment:**
     ```bash
