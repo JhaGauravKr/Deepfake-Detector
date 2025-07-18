@@ -1,22 +1,101 @@
-# Deepfake detection using Deep Learning (ResNext and LSTM)
+# 🕵️ Deepfake Detector Web Application
 
-## 1. Introduction
-This projects aims in detection of video deepfakes using deep learning techniques like ResNext and LSTM. We have achived deepfake detection by using transfer learning where the pretrained ResNext CNN is used to obtain a feature vector, further the LSTM layer is trained using the features. 
+A robust Django-based web application designed to detect deepfake videos using a combination of ResNeXt50 for spatial feature extraction and an LSTM network for temporal analysis. Users can upload video files, and the application will analyze them to predict whether the content is "REAL" or "FAKE," along with a confidence score.
 
-## 2. Directory Structure
-For ease of understanding the project is structured in below format
-```
-Deepfake_detection_using_deep_learning
-    |
-    |--- Django Application
-    |--- Model Creation
-```
-1. Django Application 
-   - This directory consists of the django made application of our work. Where a user can upload the video and submit it to the model for prediction. The trained model performs the prediction and the result is displayed on the screen.
-2. Model Creation
-   - This directory consists of the step by step process of creating and training a deepfake detection model using our approach.
+## ✨ Features
 
-   
+* **Video Upload:** Intuitive web interface for uploading video files.
+* **Video Preprocessing:** Extracts frames from uploaded videos.
+* **Face Detection & Cropping:** Utilizes `face_recognition` to identify and crop facial regions from video frames for focused analysis.
+* **Deep Learning Model:**
+    * **ResNeXt50 Backbone:** Extracts powerful spatial features from individual frames.
+    * **LSTM Network:** Analyzes temporal dependencies across a sequence of frames, crucial for detecting dynamic inconsistencies in deepfakes.
+* **Prediction & Confidence Score:** Provides a clear "REAL" or "FAKE" prediction with a confidence percentage.
+* **Dynamic Model Loading:** Automatically selects the most accurate pre-trained model based on the user-specified sequence length from available models.
+* **Responsive UI:** A clean, modern, and responsive user interface built with HTML and CSS for a smooth experience across devices.
+* **Error Handling:** Robust error pages for common issues like file upload limits, missing models, or processing failures.
+
+## 🛠️ Technologies Used
+
+* **Backend:**
+    * Python 3.x
+    * Django (Web Framework)
+    * PyTorch (Deep Learning Framework)
+    * Torchvision (for ResNeXt50 model and transforms)
+* **Computer Vision & ML Libraries:**
+    * OpenCV (`opencv-python`)
+    * Face-Recognition
+    * NumPy
+    * Pillow (PIL Fork)
+    * Scikit-image (for some image ops, though mainly OpenCV/PIL used)
+* **Frontend:**
+    * HTML5
+    * CSS3
+    * Google Fonts (Inter)
+    * Font Awesome (for icons, optional)
+* **Database:** SQLite3 (development)
+
+## 🚀 Installation & Setup
+
+Follow these steps to get the project up and running on your local machine.
+
+### Prerequisites
+
+* Python 3.8+
+* `pip` (Python package installer)
+
+### Steps
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/YourGitHubUsername/Deepfake-Detector-Django.git](https://github.com/JhaGauravKr/DeepFake-Detector.git)
+    cd Deepfake-Detector-Django # Navigate to the project root where manage.py is
+    ```
+
+2.  **Create and Activate a Virtual Environment:**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate # On Windows: venv\Scripts\activate
+    ```
+
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *Note: For CUDA/GPU support with PyTorch, you might need to follow specific installation instructions from [PyTorch.org](https://pytorch.org/get-started/locally/) based on your system configuration and CUDA version. The `requirements.txt` installs the CPU version by default.*
+
+4.  **Prepare Trained Models:**
+    * Create a `models` directory in your project root (same level as `manage.py`).
+        ```bash
+        mkdir models
+        ```
+    * Place your pre-trained PyTorch model `.pt` files inside this `models/` directory.
+    # Download Models
+      https://drive.google.com/drive/folders/1UX8jXUXyEjhLLZ38tcgOwGsZ6XFSLDJ-?usp=sharing
+
+    * **Important:** Model filenames must follow the convention:
+        `model_ACCURACY_acc_SEQUENCE_LENGTH_frames_final_data.pt`
+        (e.g., `model_87_acc_60_frames_final_data.pt`, `model_92_acc_100_frames_final_data.pt`). The accuracy can be an integer or float. Ensure you have models for the sequence lengths you intend to support (e.g., 10, 20, 40, 60, 100 frames).
+
+5.  **Run Database Migrations:**
+    ```bash
+    python manage.py migrate
+    ```
+    *(This creates the necessary database tables, including for sessions, authentication, etc.)*
+
+6.  **Start the Django Development Server:**
+    ```bash
+    python manage.py runserver
+    ```
+
+## 🌐 Usage
+
+1.  Open your web browser and navigate to `http://127.0.0.1:8000/`.
+2.  On the homepage, use the "Upload Video File" field to select a video (e.g., `.mp4`, `.gif`, `.webm`).
+3.  Enter the desired "Sequence Length" (e.g., `60`) – this determines how many frames will be analyzed.
+4.  Click "Analyze Video."
+5.  The application will process the video, extract faces, run the deepfake detection model, and display the prediction (REAL/FAKE) along with a confidence score. You'll also see preview images of preprocessed frames and detected faces.
+
 
 
 ## 3. Our Results
@@ -30,5 +109,4 @@ Deepfake_detection_using_deep_learning
 |model_91_acc_80_frames_final_data.pt | 6000 | 80 | 91.49818 |
 |model_93_acc_100_frames_final_data.pt| 6000 | 100 | 93.58794|
 
-## Download Models
-https://drive.google.com/drive/folders/1UX8jXUXyEjhLLZ38tcgOwGsZ6XFSLDJ-?usp=sharing
+
