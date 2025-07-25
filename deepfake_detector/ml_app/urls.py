@@ -11,4 +11,4 @@ urlpatterns = [
 ]
 
 #Custom 404 handler (custom 404 page)
-handler404 = 'ml_app.views.error_404'
+handler404 = 'ml_app.views.handler404'
