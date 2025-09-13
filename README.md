@@ -112,6 +112,82 @@ Follow these steps to get the project up and running on your local machine.
 |model_91_acc_80_frames_FF_data.pt | 6000 | 80 | 91.49818 |
 |model_93_acc_100_frames_FF_data.pt| 6000 | 100 | 93.58794|
 
+
+
+
+## 🏗️ Model Architecture
+
+### 🔹 1. CNN Backbone (ResNet/ResNeXt)
+- Input: RGB video frames `(3 channels)`
+- Initial convolution: `Conv(3 → 64, kernel=7x7)`
+- Batch Normalization + Activation
+- Residual bottleneck blocks with channel progression:
+  ```
+  64 → 128 → 256 → 512 → 1024 → 2048
+  ```
+- Global average pooling per frame
+- **Output per frame:** `2048-dimensional feature vector`
+
+### 🔹 2. LSTM Layer
+- Input size: **2048** (CNN feature per frame)
+- Hidden size: **2048**
+- Learns temporal dynamics such as:
+  - Eye blinking patterns
+  - Lip-sync smoothness
+  - Head motion
+  - Temporal coherence
+
+### 🔹 3. Linear Classifier
+- Fully connected layer: `2048 → 2`
+- Output: `[real, fake]` probability distribution
+
+---
+
+
+---
+
+## 📊 Block Diagram
+![Block Diagram](ModelDiagram.png)
+
+---
+
+## 📂 Dataset
+- Input: RGB video clips
+- Preprocessing:
+  - Extract frames
+  - Resize and normalize
+  - Sequence batching for LSTM
+- Labels: `real`, `fake`
+
+---
+
+## ⚙️ Training Details
+- Loss: Cross-Entropy
+- Optimizer: Adam / SGD
+- Framework: PyTorch
+- Checkpoints stored as `.pt` files
+- Example parameter sizes:
+  - `lstm.weight_ih_l0 → (8192, 2048)`
+  - `linear1.weight → (2, 2048)`
+
+
+---
+
+## 🧠 Key Insights
+- **CNN** captures **spatial inconsistencies** (blurring, artifacts, texture issues).
+- **LSTM** captures **temporal inconsistencies** (unnatural motion, blink irregularities).
+- **Hybrid design** → stronger performance than CNN-only models.
+
+---
+
+## 📌 Applications
+- Social media content verification
+- Fake news prevention
+- Video authentication in forensics
+
+---
+
+
 ## 📄 License
 
 This project is open-source and available under the [MIT License](https://opensource.org/licenses/MIT). You can create a `LICENSE` file in your root with the content.
