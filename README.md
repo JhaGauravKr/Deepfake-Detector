@@ -101,7 +101,7 @@ Follow these steps to get the project up and running on your local machine.
 
 
 
-## 3. Our Results
+## 3. Results
 
 | Model Name | No of videos | No of Frames | Accuracy |
 |------------|--------------|--------------|----------|
@@ -113,7 +113,7 @@ Follow these steps to get the project up and running on your local machine.
 |model_93_acc_100_frames_FF_data.pt| 6000 | 100 | 93.58794|
 
 
-
+Always use maximum frames for better result.
 
 ## 🏗️ Model Architecture
 
