@@ -530,7 +530,8 @@ def predict_page(request):
             print("<=== | Started Prediction | ===>")
             prediction_result = predict(model, video_dataset[0], video_file_name_only)
             confidence = round(prediction_result[1], 1)
-            output = "REAL" if prediction_result[0] == 1 else "FAKE"
+            # output = "REAL" if prediction_result[0] == 1 else "FAKE"
+            output = "FAKE" if prediction_result[0] == 1 else "REAL"
             print(f"Prediction: {prediction_result[0]} ({output}) | Confidence: {confidence:.2f}%")
             print("<=== | Prediction Done | ===>")
             print(f"--- Total prediction time: {time.time() - start_time:.2f} seconds ---")
@@ -568,4 +569,5 @@ def handler404(request, exception):
     return render(request, error_404_template_name, status=404)
 
 def cuda_full(request):
+
     return render(request, cuda_full_template_name)
